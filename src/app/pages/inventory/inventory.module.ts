@@ -5,6 +5,7 @@ import { InventoryRoutingModule } from './inventory-routing.module';
 import { InventoryComponent } from './inventory.component';
 import { AddItemComponent } from '../add-item/add-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     InventoryRoutingModule,
     ReactiveFormsModule,
     FormsModule,
+    NgxPaginationModule
   ]
 })
 export class InventoryModule { }

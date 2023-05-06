@@ -1,1 +1,49 @@
-<p>inventory works!</p>
+<section class="h-100" style="background-color: #290925; color: white">
+    <nav class="navbar navbar-light bg-dark">
+        <div class="container-fluid">
+            <img src="../../../assets/okvpyiHAQCuwHedpNX5TfCWEr4iu6tPYgArwr58W-removebg-preview.png" style="width:7%"
+                alt="cavea-logo">
+            <h1>
+                Cavea Project</h1>
+            <div class="d-flex">
+                <button class="btn btn-success" routerLink="add">დამატება</button>
+            </div>
+        </div>
+    </nav>
+    <select class="btn dropdown-toggle mt-2" id="inputGroupSelect01"
+        style="background-color: #290925; color: white; cursor: pointer;" (change)="filterItem($event)">
+        <option *ngFor="let location of locations">
+            {{ location }}
+        </option>
+    </select>
+    <table class="table mt-2" style="color: white;">
+        <thead class="h5">
+            <tr>
+                <th scope="col">ნივთის სახელი</th>
+                <th scope="col">ადგილმდებარეობა</th>
+                <th scope="col">ფასი / ₾</th>
+                <th scope="col">ოპერაციები</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of Inventories | paginate: {
+            itemsPerPage: tableSize, 
+            currentPage: page, 
+            totalItems: count}; trackBy: trackByFn">
+                <td>"{{item.name}}"</td>
+                <td>{{item.location}}</td>
+                <td>{{item.price}}<span>&nbsp;₾</span></td>
+                <td>
+                    <button class="btn btn-danger" (click)="deleteItem(item.id)">წაშლა</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between">
+        <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+        </pagination-controls>
+        <div class="h5 px-5">საერთო რაოდენობა: {{totalNumber}}</div>
+    </div>
+</section>
