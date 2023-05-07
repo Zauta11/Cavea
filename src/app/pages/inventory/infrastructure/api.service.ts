@@ -14,6 +14,10 @@ export class ApiService {
     return this.http.get<Item[]>("http://localhost:3000/posts")
   }
 
+  addItem(data: any): Observable<Item> {
+    return this.http.post<Item>("http://localhost:3000/posts", data);
+  }
+  
   deleteItem(id: number): Observable<Item> {
     return this.http.delete<Item>("http://localhost:3000/posts/" + id);
   }
