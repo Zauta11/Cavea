@@ -2,6 +2,29 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
 
+  გამომდინარე იქედან, რომ ვარ Front-end Developer და ორიენტირებული ვარ 
+კონკრეტულად Angular-ის მიმართულებით განვითარებაზე, 
+პროექტი შევასრულე Angular Framework-ისა და TypeScript-ის
+საფუძველზე. სპეციფიკიდან გამომდინარე გამოყენებულია Bootstrap 5. 
+დავალება შესრულდა რამდენიმე ე.წ. კომიტში:
+
+first Commit: შეიქმნა პროექტი. გაიმართა როუტინგი (lazy loading) და პროექტის არქიტექტურა.
+
+Add Inventory page logic: გაიმართა Inventory page, შესაბამისად
+Bootstrap-ის გამოყენებით შეიქმნა ე.წ. Table-ცხრილი ადგილმდებარეობის (Select) ფილტრით, ასევე Pagination.
+ინფორმაციის წამოსაღებად გადავწყვიტე შემექმნა db.json ფაილი ე.წ. Fake Json სერვერით (http://localhost:3000/posts)-ზე
+ყველა საჭირო ენდფოინთით (GET, POST, DELETE).
+
+Add Item page logic: მოწესრიგდა Add-item page ყველა საჭირო სპეციფიკაციის გათვალისწინებით. Bootstrap-ის გამოყენებით
+შეიქმნა ე.წ. card, სადაც Reactive Forms დახმარებით ჩამოყალიბდა ინვენტარის დამატებისთვის საჭირო ლოგიკა, შესაბამისი ვალიდაციებით.
+ინვენტარის დამატებისას ყველა სავალდებულო ველის სწორად შევსების შემდეგ "დამატება" ღილაკზე დაჭერით
+მომხმარებელი ავტომატურად დაბრუნდება /inventories გვერდზე, სადაც სიის ბოლოს დახვდება მის მიერ დამატებული აითემი.
+პარალელურად აითემის დამატება აღინიშნება ქვემოთ მოცემულ ველში "საერთო რაოდენობა".
+მოცემული დავალება მუშაობს გამართულად. გამომდინარე იქედან, რომ ჩემთვის პრიორიტეტულია Angular Framework-ით მუშაობა,
+მთელი შემართებით მსურს განვვითარდე ამ კონკრეტული მიმართულებით თქვენს კომპეტენტურ გუნდთან ერთად.
+
+
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
