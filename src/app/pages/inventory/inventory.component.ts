@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { catchError, EMPTY } from 'rxjs';
 import { Item } from 'src/app/core/interfaces';
 import { ApiService } from './infrastructure/api.service';
@@ -21,9 +22,14 @@ export class InventoryComponent {
 
   locations: string[] = ["ყველა","მთავარი ოფისი", "კავეა გალერია", "კავეა თბილისი მოლი", "კავეა ისთ ფოინთი", "კავეა სითი მოლი"]
 
+  directions : string[] = ["ფასით სორტირება", "ფასი ზრდადობით", "ფასი კლებადობით"];
 
-  constructor(private readonly api: ApiService, private cdRef: ChangeDetectorRef) {
-  this.initData()
+  constructor(
+    private readonly api: ApiService, 
+    private readonly cdRef: ChangeDetectorRef,
+    private readonly router: Router
+    ) {
+      this.initData()
   }
 
 
@@ -43,43 +49,63 @@ export class InventoryComponent {
         this.totalNumber = items.length;
         this.cdRef.markForCheck();
       });
-  }
+      
+    }
+    
+    
+    deleteItem(itemId: number): void {
+      this.api
+      .deleteItem(itemId)
+      .pipe(
+        catchError(() => {
+          alert('Error');
+          
+          return EMPTY;
+        })
+        )
+        .subscribe(() => {
+          this.Inventories = this.items?.filter(({ id }) => id !== itemId);
+          alert('Item deleted successfully');
+          this.totalNumber = this.Inventories.length;
+          this.cdRef.markForCheck();
+        });
+      }
+      
+      
+      filterItem(itemLocation: any) {
+        const isAll = itemLocation.target.value === "ყველა";    
+        this.Inventories = this.items?.filter(({ location }) => 
+        isAll ? location : location == itemLocation.target.value
+        )
+        this.cdRef.markForCheck();
+      }
+      
+      sortingByPrice(sortPrice : any) {
+        this.api.getItems().subscribe((res: Item[]) => {
+          const isUp = sortPrice.target.value === "ფასი ზრდადობით";
+          const isDown = sortPrice.target.value === "ფასი კლებადობით";
+            res.sort((a: { price: string }, b: { price: string }) => isUp ? a.price.localeCompare(b.price): isDown ? b.price.localeCompare(a.price): 0)
+            console.log(res)
+            this.Inventories = res;
+            this.cdRef.markForCheck(); 
+          });
+          
+        }
+      
+      onTableDataChange(event: number): void {
+        this.page = event;
+        this.cdRef.markForCheck();
+      }
 
-  
-  deleteItem(itemId: number): void {
-    this.api
-    .deleteItem(itemId)
-    .pipe(
-      catchError(() => {
-        alert('Error');
-
-        return EMPTY;
-      })
-    )
-    .subscribe(() => {
-      this.Inventories = this.items?.filter(({ id }) => id !== itemId);
-      alert('Item deleted successfully');
-      this.totalNumber = this.Inventories.length;
-      this.cdRef.markForCheck();
-    });
-  }
-
-  filterItem(itemLocation: any): void {
-    const isAll = itemLocation.target.value === "ყველა";
-    this.Inventories = this.items?.filter(({ location }) => 
-      isAll ? location : location == itemLocation.target.value
-    )
-    this.cdRef.markForCheck();
-  }
-  
-  onTableDataChange(event: number): void {
-    this.page = event;
-    this.cdRef.markForCheck();
-  }
 
   trackByFn(index: number, item: Item): number {
     return item.id;
   }
+
   
+  addItem(): void {
+      this.router.navigate(['/inventories/add']);
+  }
+
 
 }

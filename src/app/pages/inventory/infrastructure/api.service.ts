@@ -10,15 +10,17 @@ export class ApiService {
 
   constructor(private readonly http: HttpClient) { }
 
+  base_URL = "http://localhost:3000/posts";
+
   getItems(): Observable<Item[]> {
-    return this.http.get<Item[]>("http://localhost:3000/posts")
+    return this.http.get<Item[]>(this.base_URL);
   }
 
   addItem(data: any): Observable<Item> {
-    return this.http.post<Item>("http://localhost:3000/posts", data);
+    return this.http.post<Item>(`${this.base_URL}`, data);
   }
   
   deleteItem(id: number): Observable<Item> {
-    return this.http.delete<Item>("http://localhost:3000/posts/" + id);
-  }
+    return this.http.delete<Item>(`${this.base_URL}/${id}`);
+  } 
 }

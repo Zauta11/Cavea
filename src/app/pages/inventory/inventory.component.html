@@ -6,7 +6,7 @@
             <h1>
                 Cavea Project</h1>
             <div class="d-flex">
-                <button class="btn btn-success" routerLink="add">დამატება</button>
+                <button class="btn btn-success" (click)="addItem()">დამატება</button>
             </div>
         </div>
     </nav>
@@ -14,6 +14,12 @@
         style="background-color: #290925; color: white; cursor: pointer;" (change)="filterItem($event)">
         <option *ngFor="let location of locations">
             {{ location }}
+        </option>
+    </select>
+    <select class="btn dropdown-toggle mt-2" id="inputGroupSelect01"
+        style="background-color: #290925; color: white; cursor: pointer;" (change)="sortingByPrice($event)">
+        <option *ngFor="let direction of directions">
+            {{ direction }}
         </option>
     </select>
     <table class="table mt-2" style="color: white;">
@@ -44,6 +50,6 @@
     <div class="d-flex justify-content-between">
         <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
         </pagination-controls>
-        <div class="h5 px-5">საერთო რაოდენობა: {{totalNumber}}</div>
+        <span class="h5 px-5">საერთო რაოდენობა: {{totalNumber}}</span>
     </div>
 </section>
