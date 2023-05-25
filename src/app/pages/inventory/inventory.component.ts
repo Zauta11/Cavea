@@ -81,16 +81,11 @@ export class InventoryComponent {
       }
       
       sortingByPrice(sortPrice : any) {
-        this.api.getItems().subscribe((res: Item[]) => {
-          const isUp = sortPrice.target.value === "ფასი ზრდადობით";
-          const isDown = sortPrice.target.value === "ფასი კლებადობით";
-            res.sort((a: { price: string }, b: { price: string }) => isUp ? a.price.localeCompare(b.price): isDown ? b.price.localeCompare(a.price): 0)
-            console.log(res)
-            this.Inventories = res;
-            this.cdRef.markForCheck(); 
-          });
-          
-        }
+        const isUp = sortPrice.target.value === "ფასი ზრდადობით";
+        const isDown = sortPrice.target.value === "ფასი კლებადობით";
+        this.Inventories.sort((a: {price: string}, b: {price: string}) => isUp ? a.price.localeCompare(b.price): isDown ? b.price.localeCompare(a.price): 0)
+        this.cdRef.markForCheck(); 
+      }
       
       onTableDataChange(event: number): void {
         this.page = event;
