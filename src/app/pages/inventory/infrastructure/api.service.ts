@@ -23,4 +23,8 @@ export class ApiService {
   deleteItem(id: number): Observable<Item> {
     return this.http.delete<Item>(`${this.base_URL}/${id}`);
   } 
+
+  updateItem(id: number, item: any): Observable<Item> {
+    return this.http.put<Item>(`${this.base_URL}/${id}`, item);
+  }
 }

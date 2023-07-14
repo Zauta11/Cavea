@@ -1,3 +1,4 @@
+import { Target } from '@angular/compiler';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, EMPTY } from 'rxjs';
@@ -71,21 +72,24 @@ export class InventoryComponent {
         });
       }
       
-      
-      filterItem(itemLocation: any) {
-        const isAll = itemLocation.target.value === "ყველა";    
+      filterItem(itemLocation: any): void {
+        const isAll = itemLocation.target.value === "ყველა";
         this.Inventories = this.items?.filter(({ location }) => 
-        isAll ? location : location == itemLocation.target.value
-        )
+        isAll ? location : location === itemLocation.target.value
+         )
         this.cdRef.markForCheck();
       }
       
-      sortingByPrice(sortPrice : any) {
-        const isUp = sortPrice.target.value === "ფასი ზრდადობით";
-        const isDown = sortPrice.target.value === "ფასი კლებადობით";
-        this.Inventories.sort((a: {price: string}, b: {price: string}) => isUp ? a.price.localeCompare(b.price): isDown ? b.price.localeCompare(a.price): 0)
-        this.cdRef.markForCheck(); 
-      }
+      sortingByPrice(sortPrice : any): void  {
+        this.api.getItems().subscribe((res: Item[]) => {
+          const isUp = sortPrice.target.value === "ფასი ზრდადობით";
+          const isDown = sortPrice.target.value === "ფასი კლებადობით";
+            res.sort((a: { price: string }, b: { price: string }) => isUp ? a.price.localeCompare(b.price): isDown ? b.price.localeCompare(a.price): 0  )
+            this.Inventories = res;
+            this.cdRef.markForCheck(); 
+          });
+          
+        }
       
       onTableDataChange(event: number): void {
         this.page = event;
@@ -97,6 +101,9 @@ export class InventoryComponent {
     return item.id;
   }
 
+  editInventory(itemId: number): void  {
+    this.router.navigate(['inventories', itemId]);
+ }
   
   addItem(): void {
       this.router.navigate(['/inventories/add']);

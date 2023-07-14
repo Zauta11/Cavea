@@ -6,18 +6,20 @@ import { InventoryComponent } from './inventory.component';
 import { AddItemComponent } from '../add-item/add-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { EditItemComponent } from '../edit-item/edit-item.component';
 
 
 @NgModule({
   declarations: [
     InventoryComponent,
-    AddItemComponent
+    AddItemComponent,
+    EditItemComponent,
+
   ],
   imports: [
     CommonModule,
     InventoryRoutingModule,
     ReactiveFormsModule,
-    FormsModule,
     NgxPaginationModule
   ]
 })

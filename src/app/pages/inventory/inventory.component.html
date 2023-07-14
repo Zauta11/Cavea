@@ -41,6 +41,9 @@
                 <td>{{item.location}}</td>
                 <td>{{item.price}}<span>&nbsp;₾</span></td>
                 <td>
+                    <button class="btn btn-primary" (click)="editInventory(item.id)">შეცვლა</button>
+                </td>
+                <td>
                     <button class="btn btn-danger" (click)="deleteItem(item.id)">წაშლა</button>
                 </td>
             </tr>
