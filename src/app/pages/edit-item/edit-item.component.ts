@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, EMPTY } from 'rxjs';
@@ -8,40 +8,40 @@ import { ApiService } from '../inventory/infrastructure/api.service';
 @Component({
   selector: 'app-edit-item',
   templateUrl: './edit-item.component.html',
-  styleUrls: ['./edit-item.component.scss']
+  styleUrls: ['./edit-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditItemComponent {
 
   locations: string[] = ["მთავარი ოფისი", "კავეა გალერია", "კავეა თბილისი მოლი", "კავეა ისთ ფოინთი", "კავეა სითი მოლი"]
   itemId: number = this.activatedRoute.snapshot.params["id"];
   allItems?: Item[];
-  item: any;
+  item?: Item;
 
 
 constructor(private readonly api: ApiService,
             private readonly activatedRoute: ActivatedRoute,
             private readonly router: Router 
   ) {
-   
+
     this.api
-    .getItems()
+    .getItem(this.itemId)
     .pipe(
       catchError(() => {
-        alert('Error');
-  
-        return EMPTY;
+        alert("Error");
+        return EMPTY
       })
     ).subscribe((res) => {
-      this.allItems = res;
-      this.item = this.allItems.find((oneItem: {id: number}) => oneItem.id == this.itemId);
+      this.item = res;
 
       this.form.setValue({
         location: this.item.location,
         name: this.item.name,
         price: this.item.price
-      })    
-    });    
-
+      })  
+    })
+   
+   
 }
 
 

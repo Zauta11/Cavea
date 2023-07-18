@@ -14,16 +14,16 @@ import { ApiService } from './infrastructure/api.service';
 export class InventoryComponent {
   
   title= "pagination";
-  Inventories: any;
+  inventories: any;
   page: number = 1;
   count: number = 0;
   tableSize: number = 20;
   items? : Item[];
-  totalNumber?: number;
 
   locations: string[] = ["ყველა","მთავარი ოფისი", "კავეა გალერია", "კავეა თბილისი მოლი", "კავეა ისთ ფოინთი", "კავეა სითი მოლი"]
 
-  directions : string[] = ["ფასით სორტირება", "ფასი ზრდადობით", "ფასი კლებადობით"];
+  priceDirections : string[] = ["ფასით სორტირება", "ფასი ზრდადობით", "ფასი კლებადობით"];
+  totalNumber?: number;
 
   constructor(
     private readonly api: ApiService, 
@@ -46,8 +46,8 @@ export class InventoryComponent {
       )
       .subscribe((items: Item[]) => {
         this.items = items;
-        this.Inventories= items;
-        this.totalNumber = items.length;
+        this.inventories= items;
+        this.totalNumber = this.inventories.length;
         this.cdRef.markForCheck();
       });
       
@@ -65,16 +65,16 @@ export class InventoryComponent {
         })
         )
         .subscribe(() => {
-          this.Inventories = this.items?.filter(({ id }) => id !== itemId);
+          this.inventories = this.items?.filter(({ id }) => id !== itemId);
           alert('Item deleted successfully');
-          this.totalNumber = this.Inventories.length;
+          this.totalNumber = this.inventories.length;
           this.cdRef.markForCheck();
         });
       }
       
       filterItem(itemLocation: any): void {
         const isAll = itemLocation.target.value === "ყველა";
-        this.Inventories = this.items?.filter(({ location }) => 
+        this.inventories = this.items?.filter(({ location }) => 
         isAll ? location : location === itemLocation.target.value
          )
         this.cdRef.markForCheck();
@@ -85,7 +85,7 @@ export class InventoryComponent {
           const isUp = sortPrice.target.value === "ფასი ზრდადობით";
           const isDown = sortPrice.target.value === "ფასი კლებადობით";
             res.sort((a: { price: string }, b: { price: string }) => isUp ? a.price.localeCompare(b.price): isDown ? b.price.localeCompare(a.price): 0  )
-            this.Inventories = res;
+            this.inventories = res;
             this.cdRef.markForCheck(); 
           });
           
