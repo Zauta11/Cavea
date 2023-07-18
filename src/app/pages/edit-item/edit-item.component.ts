@@ -15,7 +15,6 @@ export class EditItemComponent {
 
   locations: string[] = ["მთავარი ოფისი", "კავეა გალერია", "კავეა თბილისი მოლი", "კავეა ისთ ფოინთი", "კავეა სითი მოლი"]
   itemId: number = this.activatedRoute.snapshot.params["id"];
-  allItems?: Item[];
   item?: Item;
 
 
